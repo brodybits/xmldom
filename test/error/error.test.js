@@ -1,6 +1,7 @@
-var wows = require('vows');
+"use strict";
+
 var DOMParser = require('../../lib/dom-parser').DOMParser;
-const assert = require('../assert')
+const assert = require('assert');
 
 var xml = '<scxml xmlns="http://www.w3.org/2005/07/scxml" version="1.0"\n\
        profile="ecmascript" id="scxmlRoot" initial="start">\n\
@@ -60,15 +61,15 @@ describe('errorHandle', () => {
     	var errorHandler = {[k]:[]};
     	errorHandler[k] = function(msg){errorMap[k].push(msg)}
 	    new DOMParser({errorHandler:errorHandler}).parseFromString(faulty, 'text/xml');
-    	assert.isTrue(errorHandler[k].length > 0, 'expected entries for '+k);
+    	assert.strictEqual(errorHandler[k].length > 0, 'expected entries for '+k);
     });
     var error2 = [];
     for(var n in errorMap){
     	error2 = error2.concat(errorMap[n])
-    	assert(error.length, errorMap[n].length)
+    	assert.strictEqual(error.length, errorMap[n].length);
     }
    
-    assert(error2.sort().join(','), error.sort().join(','), 'expected same messages')
+    assert.strictEqual(error2.sort().join(','), error.sort().join(','), 'expected same messages')
   })
 
   it("error function throwing is not caught", () => {
@@ -92,7 +93,7 @@ describe('errorHandle', () => {
 			error.length > 0 && error.every(e => /\n@#\[line\:\d+,col\:\d+\]/.test(e)),
 			'line,col must record:'+JSON.stringify(error)
 	)
-	assert(doc1, '<html xmlns="http://www.w3.org/1999/xhtml"><body title="1&lt;2"><table></table>&lt;;test</body></html>');
-	assert(doc2, undefined);
+	assert.strictEqual(doc1, '<html xmlns="http://www.w3.org/1999/xhtml"><body title="1&lt;2"><table></table>&lt;;test</body></html>');
+	assert.strictEqual(doc2, undefined);
   })
 })
