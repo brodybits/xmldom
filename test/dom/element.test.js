@@ -82,7 +82,7 @@ describe('XML Namespace Parse', () => {
        var doc = new DOMParser().parseFromString('<xml xmlns="http://test.com" id="root">' +
        		'<child id="a1" title="1"><child id="a2"  title="2"/></child>' +
        		'<child id="a1"   title="3"/></xml>','text/xml');
-       assert.isTrue(doc.getElementById('root') != null, 'root')
+       assert.ok(doc.getElementById('root') != null, 'root')
        assert.strictEqual(doc.getElementById('a1').getAttribute('title'), "1", "first");
        assert.strictEqual(doc.getElementById('a2').getAttribute('title'), "2", "second");
        assert.strictEqual(doc.getElementById('a2').getAttribute('title2'), "", "empty");
@@ -107,7 +107,7 @@ describe('XML Namespace Parse', () => {
        	var str4=new XMLSerializer().serializeToString(doc4);
        	assert.strictEqual(str1, str2, 'str1 == str2')
         assert.strictEqual(str2, str3, 'str2 == str3');
-       	assert.isTrue(str3 != str4, 'str4 != str3:' + str3);
+       	assert.ok(str3 != str4, 'str4 != str3:' + str3);
        	assert.strictEqual(str3.length, str4.length, 'str3 and str4 have same length');
     })
 

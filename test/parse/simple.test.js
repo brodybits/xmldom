@@ -66,9 +66,9 @@ function runParserWith (testValue) {
     try {
       parser.parseFromString(testValue);
       // If the above line doesn't throw then fail the test
-      assert.isTrue(false);
+      assert.ok(false);
     } catch (e) {
-      assert.isTrue(isInvalidDocSource(e));
+      assert.ok(isInvalidDocSource(e));
     }
   }
 }
