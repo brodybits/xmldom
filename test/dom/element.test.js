@@ -46,7 +46,7 @@ describe('XML Namespace Parse', () => {
        
 		var feed = new DOMParser().parseFromString('<feed><entry>foo</entry></feed>');
 		var entries = feed.documentElement.getElementsByTagName('entry');
-		assert.equal(entries.length , 1,'assert entry nodelist length ==1');
+		assert.strictEqual(entries.length, 1, 'assert entry nodelist length === 1');
 		assert.strictEqual(entries[0].nodeName, 'entry');
         assert.strictEqual(feed.documentElement.childNodes.item(0).nodeName, 'entry');
     })

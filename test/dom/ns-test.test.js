@@ -13,7 +13,7 @@ describe('XML Namespace Parse', () => {
 		}).parseFromString('<html><body><c:var name="a" value="${1}"/></body></html>', "text/xml");
 		var el = doc.getElementsByTagName('c:var')[0];
 		assert.strictEqual(el.namespaceURI, 'http://www.xidea.org/lite/core')
-		assert.equal(doc, '<html xmlns="http://www.w3.org/1999/xhtml"><body><c:var name="a" value="${1}" xmlns:c="http://www.xidea.org/lite/core"></c:var></body></html>')
+		assert.strictEqual(doc.toString(), '<html xmlns="http://www.w3.org/1999/xhtml"><body><c:var name="a" value="${1}" xmlns:c="http://www.xidea.org/lite/core"></c:var></body></html>')
 	})
 
 	//ignore default prefix xml attribute 

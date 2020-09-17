@@ -93,7 +93,7 @@ describe('errorHandle', () => {
 			error.length > 0 && error.every(e => /\n@#\[line\:\d+,col\:\d+\]/.test(e)),
 			'line,col must record:'+JSON.stringify(error)
 	)
-	assert.equal(doc1, '<html xmlns="http://www.w3.org/1999/xhtml"><body title="1&lt;2"><table></table>&lt;;test</body></html>');
+	assert.strictEqual(doc1.toString(), '<html xmlns="http://www.w3.org/1999/xhtml"><body title="1&lt;2"><table></table>&lt;;test</body></html>');
 	assert.strictEqual(doc2, undefined);
   })
 })

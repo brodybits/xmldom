@@ -28,12 +28,12 @@ function check(data,doc){
 	var domjsresult = format(data);
 	var xmldomresult = new XMLSerializer().serializeToString(doc);
 	var xmldomresult2 = new XMLSerializer().serializeToString(doc.cloneNode(true));
-	assert.equal(xmldomresult,xmldomresult2);
+	assert.strictEqual(xmldomresult, xmldomresult2);
 	xmldomresult = xmldomresult.replace(/^<\?.*?\?>\s*|<!\[CDATA\[\]\]>/g,'')
 	domjsresult = domjsresult.replace(/^<\?.*?\?>\s*|<!\[CDATA\[\]\]>/g,'')
 	//console.log('['+xmldomresult+'],['+domjsresult+']')
 	if(xmldomresult!=domjsresult){
-		assert.equal(format(xmldomresult),domjsresult);
+		assert.strictEqual(format(xmldomresult),domjsresult);
 	}
 	
 }

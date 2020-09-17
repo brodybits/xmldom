@@ -19,7 +19,7 @@ describe('parse', () => {
   it('test', () => {
 		var parser = new DOMParser();
 		var dom = parser.parseFromString('<Page><Label class="title"/></Page  1', "text/xml");
-		assert.equal(dom+'','<Page><Label class="title"/></Page>  1')
+		assert.strictEqual(dom.toString(),'<Page><Label class="title"/></Page>  1')
   })
 
   it('svg test', () => {
