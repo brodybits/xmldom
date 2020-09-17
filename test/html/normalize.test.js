@@ -39,7 +39,8 @@ describe('html normalizer', () => {
     	assert.strictEqual(dom+'', '<html test="123" xmlns="http://www.w3.org/1999/xhtml"></html>');
     	
 		var dom = new DOMParser().parseFromString('<r><Label onClick="doClick..>Hello, World</Label></r>','text/html');
-   	skip(dom+'', '<r xmlns="http://www.w3.org/1999/xhtml"><Label onClick="doClick..">Hello, World</Label></r>')
+	    // issue #125:
+   	// assert.strictEqual(dom+'', '<r xmlns="http://www.w3.org/1999/xhtml"><Label onClick="doClick..">Hello, World</Label></r>')
 
 		var dom = new DOMParser().parseFromString('<Label onClick=doClick..">Hello, World</Label>','text/html');
     	assert.strictEqual(dom+'', '<Label onClick="doClick.." xmlns="http://www.w3.org/1999/xhtml">Hello, World</Label>');
