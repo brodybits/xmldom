@@ -7,6 +7,6 @@ describe('errorHandle', () => {
   it('unclosedcomment', () => {
     var parser = new DOMParser();
 		var doc = parser.parseFromString('<!--', 'text/xml');
-		strictEqual(doc+'', '!--');
+		strictEqual(doc.toString(), '!--');
   })
 })

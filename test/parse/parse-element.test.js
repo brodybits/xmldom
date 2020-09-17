@@ -6,10 +6,10 @@ var DOMParser = require('../../lib/dom-parser').DOMParser;
 describe('XML Node Parse', () => {
     it('noAttribute', () => {
 			const expected = '<xml/>'
-			strictEqual(new DOMParser().parseFromString('<xml ></xml>','text/xml')+'', expected);
-    	strictEqual(new DOMParser().parseFromString('<xml></xml>','text/xml')+'', expected);
-    	strictEqual(new DOMParser().parseFromString('<xml />','text/xml')+'', expected);
-    	strictEqual(new DOMParser().parseFromString(expected,'text/xml')+'', expected);
+			strictEqual(new DOMParser().parseFromString('<xml ></xml>','text/xml').toString(), expected);
+    	strictEqual(new DOMParser().parseFromString('<xml></xml>','text/xml').toString(), expected);
+    	strictEqual(new DOMParser().parseFromString('<xml />','text/xml').toString(), expected);
+    	strictEqual(new DOMParser().parseFromString(expected,'text/xml').toString(), expected);
     })
 
     it('simpleAttribute', () => {

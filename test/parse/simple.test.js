@@ -7,13 +7,13 @@ describe('parse', () => {
   it('simple', () => {
 	var parser = new DOMParser();
 	var doc = parser.parseFromString('<html><body title="1<2"></body></html>', 'text/html');
-	strictEqual(doc+'', '<html xmlns="http://www.w3.org/1999/xhtml"><body title="1&lt;2"></body></html>');
+	strictEqual(doc.toString(), '<html xmlns="http://www.w3.org/1999/xhtml"><body title="1&lt;2"></body></html>');
   })
 
   it('unclosedFix', () => {
   	var parser = new DOMParser();
 		var dom = parser.parseFromString('<r><Page><Label /></Page  <Page></Page></r>', "text/xml");
-		strictEqual(dom+'', '<r><Page><Label/></Page>  <Page/></r>');
+		strictEqual(dom.toString(), '<r><Page><Label/></Page>  <Page/></r>');
   })
 
   it('test', () => {
@@ -33,7 +33,7 @@ describe('parse', () => {
 			].join('\n')
 		var parser = new DOMParser({ locator:{}});
 		var dom = parser.parseFromString(svgCase, "text/xml");
-		strictEqual(dom+'', svgCase.replace(/ \/>/g,'/>'))
+		strictEqual(dom.toString(), svgCase.replace(/ \/>/g,'/>'))
   })
 
   it('line error', () => {

@@ -7,7 +7,7 @@ var XMLSerializer = require('../../lib/dom-parser').XMLSerializer
 
 describe('errorHandle', () => {
 	it('unclosed tag', () => {
-		strictEqual(new DOMParser().parseFromString('<foo')+'', '<foo/>');
+		strictEqual(new DOMParser().parseFromString('<foo').toString(), '<foo/>');
 	})
 
 	it('document source', () => {

@@ -46,13 +46,13 @@ describe('errorHandle', () => {
 			}
 		});
 		strictEqual(
-			p.parseFromString('<test><!--', 'text/xml').documentElement+'',
+			p.parseFromString('<test><!--', 'text/xml').documentElement.toString(),
 			'<test/>'
 		);
 		strictEqual(errors.length, 4);
 		errors = []
 		strictEqual(
-			p.parseFromString('<r', 'text/xml').documentElement+'',
+			p.parseFromString('<r', 'text/xml').documentElement.toString(),
 			'<r/>'
 		)
 		strictEqual(errors.length, 4)
@@ -67,11 +67,11 @@ describe('errorHandle', () => {
 	});
 	var dom = p.parseFromString('<img attr=1/>', 'text/html');
 	strictEqual(errors.length, 2,"invalid xml attribute(miss qute)")
-	strictEqual(dom+'', '<img attr="1" xmlns="http://www.w3.org/1999/xhtml"/>')
+	strictEqual(dom.toString(), '<img attr="1" xmlns="http://www.w3.org/1999/xhtml"/>')
   })
 
   it('valid html attribute value (<>&)', () => {
 		var dom = new DOMParser({}).parseFromString('<img attr="<>&"/>', 'text/html');
-		strictEqual(dom+'', '<img attr="&lt;>&amp;" xmlns="http://www.w3.org/1999/xhtml"/>',"invalid xml attribute valus (<)")
+		strictEqual(dom.toString(), '<img attr="&lt;>&amp;" xmlns="http://www.w3.org/1999/xhtml"/>',"invalid xml attribute valus (<)")
   })
 })
