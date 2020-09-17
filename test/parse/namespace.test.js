@@ -13,7 +13,7 @@ describe('XML Namespace Parse', () => {
        assert.strictEqual(root.lookupNamespaceURI(''), 'http://test.com')
        assert.strictEqual(root.firstChild.namespaceURI, 'http://test.com')
        assert.strictEqual(root.firstChild.lookupNamespaceURI(''), 'http://test.com')
-       assert.strictEqual(root.firstChild.getAttributeNode('attr').namespaceURI, null)
+       assert.equal(root.firstChild.getAttributeNode('attr').namespaceURI, null)
     })
 
     it('prefix namespace', () => {
@@ -21,7 +21,7 @@ describe('XML Namespace Parse', () => {
        var root = dom.documentElement;
        assert.strictEqual(root.firstChild.namespaceURI, 'http://p1.com')
        assert.strictEqual(root.lookupNamespaceURI('p1'), 'http://p1.com')
-       assert.strictEqual(root.firstChild.getAttributeNode('attr'), null)
+       assert.equal(root.firstChild.getAttributeNode('attr'), null)
        assert.strictEqual(root.firstChild.getAttributeNode('p1:attr').namespaceURI, 'http://p1.com')
        assert.strictEqual(root.firstChild.nextSibling.namespaceURI, 'http://p2.com')
        assert.strictEqual(root.firstChild.nextSibling.lookupNamespaceURI('p2'), 'http://p2.com')
