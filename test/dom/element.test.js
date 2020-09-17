@@ -126,8 +126,8 @@ describe('XML Namespace Parse', () => {
        	var str2=new XMLSerializer().serializeToString(doc2);
        	
        	assert.strictEqual(doc2.documentElement.lastChild.childNodes.length, 1, '1 after adding');
-       	assert.strictEqual(str1 != str2, 'str1 != str2');
-       	assert.strictEqual(str1.length != str2.length, 'str1/length != str2.length');
+       	assert.ok(str1 != str2, 'str1 != str2');
+       	assert.ok(str1.length != str2.length, 'str1/length != str2.length');
        	var doc3 = new DOMParser().parseFromString(str2,'text/xml');
        	doc3.documentElement.firstChild.appendChild(doc3.documentElement.lastChild);
        	var str3 = new XMLSerializer().serializeToString(doc3);
