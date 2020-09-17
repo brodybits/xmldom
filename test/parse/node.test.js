@@ -1,7 +1,7 @@
 'use strict';
 
 var wows = require('vows');
-var assert = require('assert');
+var { strictEqual } = require('assert');
 var DOMParser = require('../../lib/dom-parser').DOMParser;
 var XMLSerializer = require('../../lib/dom-parser').XMLSerializer;
 var parser = new DOMParser();
@@ -10,55 +10,55 @@ var parser = new DOMParser();
 describe('XML Node Parse', () => {
     it('element', () => {
     	var dom = new DOMParser().parseFromString('<xml><child/></xml>');
-    	assert.strictEqual(dom.childNodes.length, 1);
-    	assert.strictEqual(dom.documentElement.childNodes.length, 1);
-    	assert.strictEqual(dom.documentElement.tagName, 'xml');
-    	assert.strictEqual(dom.documentElement.firstChild.tagName, 'child');
+    	strictEqual(dom.childNodes.length, 1);
+    	strictEqual(dom.documentElement.childNodes.length, 1);
+    	strictEqual(dom.documentElement.tagName, 'xml');
+    	strictEqual(dom.documentElement.firstChild.tagName, 'child');
     })
 
     it('text', () => {
     	var dom = new DOMParser().parseFromString('<xml>start center end</xml>');
     	var root = dom.documentElement;
-    	assert.strictEqual(root.firstChild.data, 'start center end');
-    	assert.strictEqual(root.firstChild.nextSibling, null);
+    	strictEqual(root.firstChild.data, 'start center end');
+    	strictEqual(root.firstChild.nextSibling, null);
     })
 
     it('cdata', () => {
     	var dom = new DOMParser().parseFromString('<xml>start <![CDATA[<encoded>]]> end<![CDATA[[[[[[[[[]]]]]]]]]]></xml>');
     	var root = dom.documentElement;
-    	assert.strictEqual(root.firstChild.data, 'start ');
-    	assert.strictEqual(root.firstChild.nextSibling.data, '<encoded>');
-    	assert.strictEqual(root.firstChild.nextSibling.nextSibling.nextSibling.data, '[[[[[[[[]]]]]]]]');
+    	strictEqual(root.firstChild.data, 'start ');
+    	strictEqual(root.firstChild.nextSibling.data, '<encoded>');
+    	strictEqual(root.firstChild.nextSibling.nextSibling.nextSibling.data, '[[[[[[[[]]]]]]]]');
     })
 
     it('cdata empty', () => {
     	var dom = new DOMParser().parseFromString('<xml><![CDATA[]]>start <![CDATA[]]> end</xml>');
     	var root = dom.documentElement;
-    	assert.strictEqual(root.textContent, 'start  end');
+    	strictEqual(root.textContent, 'start  end');
     })
 
     it('comment', () => {
     	var dom = new DOMParser().parseFromString('<xml><!-- comment&>< --></xml>');
     	var root = dom.documentElement;
-    	assert.strictEqual(root.firstChild.nodeValue, ' comment&>< ');
+    	strictEqual(root.firstChild.nodeValue, ' comment&>< ');
     })
 
     it('cdata comment', () => {
     	var dom = new DOMParser().parseFromString('<xml>start <![CDATA[<encoded>]]> <!-- comment -->end</xml>');
     	var root = dom.documentElement;
-    	assert.strictEqual(root.firstChild.nodeValue, 'start ');
-    	assert.strictEqual(root.firstChild.nextSibling.nodeValue, '<encoded>');
-    	assert.strictEqual(root.firstChild.nextSibling.nextSibling.nextSibling.nodeValue, ' comment ');
-    	assert.strictEqual(root.firstChild.nextSibling.nextSibling.nextSibling.nextSibling.nodeValue, 'end');
+    	strictEqual(root.firstChild.nodeValue, 'start ');
+    	strictEqual(root.firstChild.nextSibling.nodeValue, '<encoded>');
+    	strictEqual(root.firstChild.nextSibling.nextSibling.nextSibling.nodeValue, ' comment ');
+    	strictEqual(root.firstChild.nextSibling.nextSibling.nextSibling.nextSibling.nodeValue, 'end');
     })
 
     it('append node', () => {
     	var dom = new DOMParser().parseFromString('<xml/>');
     	var child = dom.createElement("child");
-    	assert.strictEqual(child, dom.documentElement.appendChild(child));
-    	assert.strictEqual(child, dom.documentElement.firstChild);
+    	strictEqual(child, dom.documentElement.appendChild(child));
+    	strictEqual(child, dom.documentElement.firstChild);
     	var fragment = new dom.createDocumentFragment();
-    	assert.strictEqual(child, fragment.appendChild(child));
+    	strictEqual(child, fragment.appendChild(child));
     })
 
     it('insert node', () => {
@@ -66,37 +66,37 @@ describe('XML Node Parse', () => {
     	var node = dom.createElement("sibling");
     	var child = dom.documentElement.firstChild;
     	child.parentNode.insertBefore(node, child);
-    	assert.strictEqual(node, child.previousSibling);
-    	assert.strictEqual(node.nextSibling, child);
-    	assert.strictEqual(node.parentNode, child.parentNode);
+    	strictEqual(node, child.previousSibling);
+    	strictEqual(node.nextSibling, child);
+    	strictEqual(node.parentNode, child.parentNode);
     })
 
     it('insert fragment', () => {
     	var dom = new DOMParser().parseFromString('<xml><child/></xml>');
     	var fragment = dom.createDocumentFragment();
-    	assert.strictEqual(fragment.nodeType, 11);
+    	strictEqual(fragment.nodeType, 11);
     	var first = fragment.appendChild(dom.createElement("first"));
     	var last = fragment.appendChild(dom.createElement("last"));
-    	assert.strictEqual(fragment.firstChild, first);
-    	assert.strictEqual(fragment.lastChild, last);
-    	assert.strictEqual(last.previousSibling, first);
-    	assert.strictEqual(first.nextSibling, last);
+    	strictEqual(fragment.firstChild, first);
+    	strictEqual(fragment.lastChild, last);
+    	strictEqual(last.previousSibling, first);
+    	strictEqual(first.nextSibling, last);
     	var child = dom.documentElement.firstChild;
     	child.parentNode.insertBefore(fragment, child);
-    	assert.strictEqual(last.previousSibling, first);
-    	assert.strictEqual(first.nextSibling, last);
-    	assert.strictEqual(child.parentNode.firstChild, first);
-    	assert.strictEqual(last, child.previousSibling);
-    	assert.strictEqual(last.nextSibling, child);
-    	assert.strictEqual(first.parentNode, child.parentNode);
-    	assert.strictEqual(last.parentNode, child.parentNode);
+    	strictEqual(last.previousSibling, first);
+    	strictEqual(first.nextSibling, last);
+    	strictEqual(child.parentNode.firstChild, first);
+    	strictEqual(last, child.previousSibling);
+    	strictEqual(last.nextSibling, child);
+    	strictEqual(first.parentNode, child.parentNode);
+    	strictEqual(last.parentNode, child.parentNode);
     })
 
     it("instruction", () => {
 		var source = '<?xml version="1.0"?><root><child>&amp;<!-- &amp; --></child></root>';
 		var doc = new DOMParser().parseFromString(source,"text/xml");
     	var source2 = new XMLSerializer().serializeToString(doc);
-    	assert.strictEqual(source2, source);
+    	strictEqual(source2, source);
     })
 
 	it('public id && sysid', () => {
@@ -108,7 +108,7 @@ describe('XML Node Parse', () => {
 			}
 		});
 	    var doc = parser.parseFromString('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html/>', 'text/html');
-		assert.strictEqual(doc+'', '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"></html>')
+		strictEqual(doc+'', '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"></html>')
 		
 	})
 })

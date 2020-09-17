@@ -3,7 +3,7 @@
 var fs = require('fs');
 var DOMParser = require('../../lib/dom-parser').DOMParser;
 var XMLSerializer = require('../../lib/dom-parser').XMLSerializer
-const assert = require('assert');
+const { strictEqual } = require('assert');
 
 describe('DOMLocator', () => {
 	it('test.xml', () => {
@@ -12,7 +12,7 @@ describe('DOMLocator', () => {
 		var expexted = fs.readFileSync(__dirname+'/file-test1.result.xml').toString().replace(/\r\n?/g,'\n');
 		var dom = new DOMParser().parseFromString(data);
 		var result= new XMLSerializer().serializeToString(dom)
-		assert.strictEqual(result, expexted);
+		strictEqual(result, expexted);
 		// fs.writeFileSync(__dirname+'/file-test1.result.xml',result)
 	})
 })

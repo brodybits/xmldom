@@ -1,25 +1,25 @@
 'use strict';
 
 var DOMParser = require('../../lib/dom-parser').DOMParser;
-var assert = require('assert');
+var { ok, strictEqual } = require('assert');
 
 describe('parse', () => {
   it('simple', () => {
 	var parser = new DOMParser();
 	var doc = parser.parseFromString('<html><body title="1<2"></body></html>', 'text/html');
-	assert.strictEqual(doc+'', '<html xmlns="http://www.w3.org/1999/xhtml"><body title="1&lt;2"></body></html>');
+	strictEqual(doc+'', '<html xmlns="http://www.w3.org/1999/xhtml"><body title="1&lt;2"></body></html>');
   })
 
   it('unclosedFix', () => {
   	var parser = new DOMParser();
 		var dom = parser.parseFromString('<r><Page><Label /></Page  <Page></Page></r>', "text/xml");
-		assert.strictEqual(dom+'', '<r><Page><Label/></Page>  <Page/></r>');
+		strictEqual(dom+'', '<r><Page><Label/></Page>  <Page/></r>');
   })
 
   it('test', () => {
 		var parser = new DOMParser();
 		var dom = parser.parseFromString('<Page><Label class="title"/></Page  1', "text/xml");
-		assert.strictEqual(dom.toString(),'<Page><Label class="title"/></Page>  1')
+		strictEqual(dom.toString(),'<Page><Label class="title"/></Page>  1')
   })
 
   it('svg test', () => {
@@ -33,7 +33,7 @@ describe('parse', () => {
 			].join('\n')
 		var parser = new DOMParser({ locator:{}});
 		var dom = parser.parseFromString(svgCase, "text/xml");
-		assert.strictEqual(dom+'', svgCase.replace(/ \/>/g,'/>'))
+		strictEqual(dom+'', svgCase.replace(/ \/>/g,'/>'))
   })
 
   it('line error', () => {
@@ -50,7 +50,7 @@ describe('parse', () => {
 		var parser = new DOMParser({ locator:{} });
 		var dom = parser.parseFromString(xmlLineError, "text/xml");
 		var node = dom.documentElement.firstChild.nextSibling
-		assert.strictEqual(node.lineNumber, 7);
+		strictEqual(node.lineNumber, 7);
   })
 
   it('invalid input - falsy string', runParserWith(''))
@@ -66,9 +66,9 @@ function runParserWith (testValue) {
     try {
       parser.parseFromString(testValue);
       // If the above line doesn't throw then fail the test
-      assert.ok(false);
+      ok(false);
     } catch (e) {
-      assert.ok(isInvalidDocSource(e));
+      ok(isInvalidDocSource(e));
     }
   }
 }

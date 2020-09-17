@@ -3,7 +3,7 @@
 var wows = require('vows');
 var XMLSerializer = require('../../lib/dom-parser').XMLSerializer;
 var DOMParser = require('../../lib/dom-parser').DOMParser;
-const assert = require('assert');
+const { ok, strictEqual } = require('assert');
 
 // Create a Test Suite
 describe('XML Namespace Parse', () => {
@@ -11,7 +11,7 @@ describe('XML Namespace Parse', () => {
 		var doc1 = new DOMParser().parseFromString("<doc1 attr1='1' attr2='a2'>text1<child>text2</child></doc1>",'text/xml')
 		var doc1s = new XMLSerializer().serializeToString(doc1);
 		var n =doc1.cloneNode(true)
-		assert.strictEqual(n.toString(), doc1s)
+		strictEqual(n.toString(), doc1s)
 	})
 
 	it("can properly import", () => {
@@ -21,7 +21,7 @@ describe('XML Namespace Parse', () => {
 		var doc3 = new DOMParser().parseFromString("<doc2 attr='2'><doc1 attr1='1' attr2='a2'>text1<child>text2</child></doc1></doc2>")
 		var n =doc1.importNode(doc2.documentElement, true)
 		doc1.documentElement.appendChild(n)
-		assert.strictEqual(doc1.toString(), doc3.toString())
-		assert.ok(doc2 != doc3.toString())
+		strictEqual(doc1.toString(), doc3.toString())
+		ok(doc2 != doc3.toString())
 	})
 })

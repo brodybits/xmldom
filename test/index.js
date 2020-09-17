@@ -8,7 +8,7 @@ try{
 	var DomJS = require("dom-js");
 }
 
-var assert = require('assert');
+var { strictEqual } = require('assert');
 
 
 var oldParser = DOMParser.prototype.parseFromString ;
@@ -28,12 +28,12 @@ function check(data,doc){
 	var domjsresult = format(data);
 	var xmldomresult = new XMLSerializer().serializeToString(doc);
 	var xmldomresult2 = new XMLSerializer().serializeToString(doc.cloneNode(true));
-	assert.strictEqual(xmldomresult, xmldomresult2);
+	strictEqual(xmldomresult, xmldomresult2);
 	xmldomresult = xmldomresult.replace(/^<\?.*?\?>\s*|<!\[CDATA\[\]\]>/g,'')
 	domjsresult = domjsresult.replace(/^<\?.*?\?>\s*|<!\[CDATA\[\]\]>/g,'')
 	//console.log('['+xmldomresult+'],['+domjsresult+']')
 	if(xmldomresult!=domjsresult){
-		assert.strictEqual(format(xmldomresult),domjsresult);
+		strictEqual(format(xmldomresult),domjsresult);
 	}
 	
 }
